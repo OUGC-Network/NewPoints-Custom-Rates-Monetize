@@ -30,8 +30,11 @@ $l = [
     'newpoints_custom_rates_monetize' => 'Custom Rates Monetize',
     'newpoints_custom_rates_monetize_desc' => 'Require users to spend points to rate posts using the Custom Rates plugin.',
 
-    'setting_group_newpoints_custom_rates_monetize' => ' Custom Rates Monetize',
+    'setting_group_newpoints_custom_rates_monetize' => 'Custom Rates Monetize',
     'setting_group_newpoints_custom_rates_monetize_desc' => 'Require users to spend points to rate posts using the Custom Rates plugin.',
+
+    'setting_newpoints_custom_rates_monetize_home_transactions' => 'Home Transactions',
+    'setting_newpoints_custom_rates_monetize_home_transactions_desc' => 'Set how many last transactions to show in the Newpoints home page.',
 
     'newpoints_custom_rates_monetize_row_price' => ' Newpoints Price',
     'newpoints_custom_rates_monetize_row_price_desc' => 'Set a cost for users to rate posts using this custom rate.',
