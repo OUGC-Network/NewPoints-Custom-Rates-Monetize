@@ -83,7 +83,8 @@ function plugin_information(): array
         'authorsite' => 'https://ougc.network',
         'version' => '3.1.0',
         'versioncode' => 3100,
-        'compatibility' => '31*'
+        'compatibility' => '31*',
+        'codename' => 'newpoints_custom_rates_monetize'
     ];
 }
 
