@@ -60,9 +60,7 @@ const FIELDS_DATA = [
             'type' => 'DECIMAL',
             'size' => '16,2',
             'default' => 0
-        ]
-    ],
-    'ougc_customrep_log' => [
+        ],
         'newpoints_charged' => [
             'type' => 'DECIMAL',
             'size' => '16,2',
