@@ -67,6 +67,18 @@ const FIELDS_DATA = [
             'default' => 0
         ]
     ],
+    'usergroups' => [
+        'newpoints_rate_custom_rates_subtraction' => [
+            'type' => 'DECIMAL',
+            'size' => '16,2',
+            'default' => 100,
+            'formType' => 'numericField',
+            'formOptions' => [
+                //'min' => 0,
+                'step' => 0.01,
+            ]
+        ],
+    ],
     'forums' => [
         'newpoints_rate_custom_rates' => [
             'type' => 'DECIMAL',

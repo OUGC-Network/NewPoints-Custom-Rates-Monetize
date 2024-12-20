@@ -70,7 +70,7 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
 
         $user_group_permissions = users_get_group_permissions($log_user_id);
 
-        $group_rate = $user_group_permissions['newpoints_rate_subtraction'] / 100;
+        $group_rate = $user_group_permissions['newpoints_rate_custom_rates_subtraction'] / 100;
 
         if ($forum_rate && $group_rate) {
             $log_user_data = get_user($log_user_id);

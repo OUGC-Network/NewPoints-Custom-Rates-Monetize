@@ -83,3 +83,11 @@ function newpoints_custom_rates_monetize_is_installed(): bool
 {
     return plugin_is_installed();
 }
+
+(function () {
+    global $groupzerolesser, $grouppermbyswitch;
+
+    $groupzerolesser[] = 'newpoints_rate_custom_rates_subtraction';
+
+    $grouppermbyswitch['newpoints_rate_custom_rates_subtraction'] = 'newpoints_can_get_points';
+})();

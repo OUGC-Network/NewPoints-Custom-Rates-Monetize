@@ -32,6 +32,7 @@ namespace Newpoints\CustomRatesMonetize\Hooks\Admin;
 
 use function Newpoints\Core\language_load;
 
+use const Newpoints\CustomRatesMonetize\Admin\FIELDS_DATA;
 use const Newpoints\CustomRatesMonetize\ROOT;
 
 function newpoints_settings_rebuild_start(array &$hook_arguments): array
@@ -66,13 +67,30 @@ function newpoints_admin_settings_commit_start(array &$setting_groups_objects): 
     return newpoints_admin_settings_intermediate($setting_groups_objects);
 }
 
+function newpoints_admin_user_groups_edit_graph_start(array &$hook_arguments): array
+{
+    language_load('custom_rates_monetize');
+
+    $hook_arguments['data_fields'] = array_merge(
+        $hook_arguments['data_fields'],
+        FIELDS_DATA['usergroups']
+    );
+
+    return $hook_arguments;
+}
+
+function newpoints_admin_user_groups_edit_commit_start(array &$hook_arguments): array
+{
+    return newpoints_admin_user_groups_edit_graph_start($hook_arguments);
+}
+
 function newpoints_admin_formcontainer_end_start(array &$hook_arguments): array
 {
     language_load('custom_rates_monetize');
 
     $hook_arguments['data_fields'] = array_merge(
         $hook_arguments['data_fields'],
-        \Newpoints\CustomRatesMonetize\Admin\FIELDS_DATA['forums']
+        FIELDS_DATA['forums']
     );
 
     return $hook_arguments;
