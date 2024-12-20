@@ -40,4 +40,6 @@ $l = [
     'newpoints_custom_rates_monetize_row_price_desc' => 'Set a cost for users to rate posts using this custom rate.',
     'newpoints_custom_rates_monetize_row_author_share_percentage' => ' Author Share Percentage',
     'newpoints_custom_rates_monetize_row_author_share_percentage_desc' => 'Percentage of the cost that the author of the post will receive. Points are returned to the rating user if the rate is undone.',
+
+    'newpoints_forums_rate_custom_rates' => 'Custom Rates Rate<br /><small class="input">The income rate for rating posts in this forum. Default is <code>1</code>.</small><br />'
 ];

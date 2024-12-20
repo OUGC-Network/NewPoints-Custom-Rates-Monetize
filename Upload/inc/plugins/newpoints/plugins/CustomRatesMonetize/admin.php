@@ -66,7 +66,19 @@ const FIELDS_DATA = [
             'size' => '16,2',
             'default' => 0
         ]
-    ]
+    ],
+    'forums' => [
+        'newpoints_rate_custom_rates' => [
+            'type' => 'DECIMAL',
+            'size' => '16,2',
+            'default' => 1,
+            'formType' => 'numericField',
+            'formOptions' => [
+                //'min' => 0,
+                'step' => 0.01,
+            ]
+        ],
+    ],
 ];
 
 function plugin_information(): array

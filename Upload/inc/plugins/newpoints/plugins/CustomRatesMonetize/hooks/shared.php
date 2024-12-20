@@ -66,7 +66,7 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
 
         $forum_data = get_forum($forum_id);
 
-        $forum_rate = (float)$forum_data['newpoints_rate'];
+        $forum_rate = (float)$forum_data['newpoints_rate_custom_rates'];
 
         $user_group_permissions = users_get_group_permissions($log_user_id);
 

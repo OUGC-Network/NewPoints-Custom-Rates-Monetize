@@ -66,6 +66,23 @@ function newpoints_admin_settings_commit_start(array &$setting_groups_objects): 
     return newpoints_admin_settings_intermediate($setting_groups_objects);
 }
 
+function newpoints_admin_formcontainer_end_start(array &$hook_arguments): array
+{
+    language_load('custom_rates_monetize');
+
+    $hook_arguments['data_fields'] = array_merge(
+        $hook_arguments['data_fields'],
+        \Newpoints\CustomRatesMonetize\Admin\FIELDS_DATA['forums']
+    );
+
+    return $hook_arguments;
+}
+
+function newpoints_admin_forum_management_edit_commit_start(array &$hook_arguments): array
+{
+    return newpoints_admin_formcontainer_end_start($hook_arguments);
+}
+
 function ougc_custom_rates_cache_update_start(array &$hook_arguments): array
 {
     $hook_arguments['dbFields'][] = 'newpoints_price';
