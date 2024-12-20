@@ -105,8 +105,8 @@ function plugin_information(): array
         'website' => 'https://ougc.network',
         'author' => 'Omar G.',
         'authorsite' => 'https://ougc.network',
-        'version' => '3.1.0',
-        'versioncode' => 3100,
+        'version' => '3.1.1',
+        'versioncode' => 3101,
         'compatibility' => '31*',
         'codename' => 'newpoints_custom_rates_monetiz'
     ];
