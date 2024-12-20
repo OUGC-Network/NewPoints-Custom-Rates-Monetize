@@ -2,7 +2,7 @@
 
 /***************************************************************************
  *
- *    OUGC Custom Rates Monetize plugin (/inc/plugins/CustomRatesMonetize/admin.php)
+ *    NewPoints Custom Rates Monetize plugin (/inc/plugins/CustomRatesMonetize/admin.php)
  *    Author: Omar Gonzalez
  *    Copyright: © 2024 Omar Gonzalez
  *
