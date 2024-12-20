@@ -32,11 +32,12 @@ namespace Newpoints\CustomRatesMonetize\Hooks\Shared;
 
 use function Newpoints\Core\get_setting;
 use function Newpoints\Core\language_load;
+use function Newpoints\Core\log_add;
 use function Newpoints\Core\points_add_simple;
 use function Newpoints\Core\points_format;
 use function Newpoints\Core\points_substract;
-use function Newpoints\Core\rules_forum_get_rate;
-use function Newpoints\Core\rules_get_group_rate;
+use function Newpoints\Core\user_can_get_points;
+use function Newpoints\Core\users_get_group_permissions;
 use function ougc\CustomRates\Core\logGet;
 use function ougc\CustomRates\Core\rateGet;
 
@@ -61,23 +62,19 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
 
         $post_user_data = get_user($post_user_id);
 
-        $forum_rate = rules_forum_get_rate((int)$post_data['fid']);
+        $forum_id = (int)$post_data['fid'];
 
-        if (!empty($forum_rate['rate'])) {
-            $forum_rate = (int)$forum_rate['rate'];
-        } else {
-            $forum_rate = 1;
-        }
+        $forum_data = get_forum($forum_id);
 
-        $group_rate = rules_get_group_rate(get_user($log_user_id));
+        $forum_rate = (float)$forum_data['newpoints_rate'];
 
-        if (!empty($group_rate['rate'])) {
-            $group_rate = (int)$group_rate['rate'];
-        } else {
-            $group_rate = 1;
-        }
+        $user_group_permissions = users_get_group_permissions($log_user_id);
+
+        $group_rate = $user_group_permissions['newpoints_rate_subtraction'] / 100;
 
         if ($forum_rate && $group_rate) {
+            $log_user_data = get_user($log_user_id);
+
             $log_points = round(
                 $log_points * $forum_rate * $group_rate,
                 (int)get_setting('main_decimal')
@@ -101,12 +98,35 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
 
                 $hook_arguments['insertData']['newpoints_charged'] = $log_points;
 
-                if ($author_share > 0 && $author_share <= 100) {
-                    $log_points = round($log_points * $author_share / 100, (int)get_setting('main_decimal'));
+                log_add(
+                    'custom_rates_monetize_charge',
+                    '',
+                    $log_user_data['username'],
+                    $log_user_id,
+                    $log_points,
+                    $rate_id,
+                    $post_id
+                );
 
-                    points_add_simple($post_user_id, $log_points);
+                if ($author_share > 0 && $author_share <= 100 && user_can_get_points($post_user_id, $forum_id)) {
+                    $log_points_author_share = round(
+                        $log_points * $author_share / 100,
+                        (int)get_setting('main_decimal')
+                    );
 
-                    $hook_arguments['insertData']['newpoints_received'] = $log_points;
+                    points_add_simple($post_user_id, $log_points_author_share);
+
+                    $hook_arguments['insertData']['newpoints_received'] = $log_points_author_share;
+
+                    log_add(
+                        'custom_rates_monetize_author_share',
+                        '',
+                        $post_user_data['username'],
+                        $post_user_id,
+                        $log_points_author_share,
+                        $rate_id,
+                        $post_id
+                    );
                 }
             }
         }
@@ -121,9 +141,9 @@ function ougc_custom_reputation_log_delete_end(array &$hook_arguments): array
 
     $log_data = logGet($log_id);
 
-    $newpoints_received = (float)$log_data['newpoints_received'];
+    $log_points_author_share = (float)$log_data['newpoints_received'];
 
-    $points_charged = (float)$log_data['newpoints_charged'];
+    $log_points = (float)$log_data['newpoints_charged'];
 
     $post_id = (int)$log_data['pid'];
 
@@ -131,7 +151,7 @@ function ougc_custom_reputation_log_delete_end(array &$hook_arguments): array
 
     $log_user_id = (int)$log_data['uid'];
 
-    if (!empty($post_data['uid']) && !empty($newpoints_received)) {
+    if (!empty($post_data['uid']) && !empty($log_points_author_share)) {
         global $errorFunction;
 
         $post_user_id = (int)$post_data['uid'];
@@ -141,7 +161,7 @@ function ougc_custom_reputation_log_delete_end(array &$hook_arguments): array
         // if the author has no enough Newpoints, then stop the rate from being deleted
         // this will only work when the user deleting the rate is the rating user
         // won't work when deleting posts, etc
-        if ($newpoints_received > $post_user_data['newpoints'] && !empty($errorFunction)) {
+        if ($log_points_author_share > $post_user_data['newpoints'] && !empty($errorFunction)) {
             global $lang;
 
             language_load('custom_rates_monetize');
@@ -150,14 +170,36 @@ function ougc_custom_reputation_log_delete_end(array &$hook_arguments): array
                 $lang->sprintf(
                     $lang->newpoints_custom_rates_monetize_error_not_enough_points_author,
                     htmlspecialchars_uni($post_user_data['username']),
-                    points_format($newpoints_received)
+                    points_format($log_points_author_share)
                 )
             );
         }
 
-        points_substract($post_user_id, $newpoints_received);
+        $log_user_data = get_user($log_user_id);
 
-        points_add_simple($log_user_id, $points_charged);
+        points_substract($post_user_id, $log_points_author_share);
+
+        points_add_simple($log_user_id, $log_points);
+
+        log_add(
+            'custom_rates_monetize_delete_author_share',
+            '',
+            $post_user_data['username'],
+            $post_user_id,
+            $log_points_author_share,
+            (int)$log_data['rid'],
+            $post_id
+        );
+
+        log_add(
+            'custom_rates_monetize_delete_charge',
+            '',
+            $log_user_data['username'],
+            $log_user_id,
+            $log_points,
+            (int)$log_data['rid'],
+            $post_id
+        );
     }
 
     return $hook_arguments;

@@ -139,7 +139,14 @@ function plugin_is_installed(): bool
 
 function plugin_uninstallation(): bool
 {
-    log_remove(['custom_rates_monetize']);
+    log_remove(
+        [
+            'custom_rates_monetize_charge',
+            'custom_rates_monetize_author_share',
+            'custom_rates_monetize_delete_charge',
+            'custom_rates_monetize_delete_author_share'
+        ]
+    );
 
     db_drop_columns(FIELDS_DATA);
 

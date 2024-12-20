@@ -39,4 +39,12 @@ $l = [
     'newpoints_custom_rates_monetize_page_logs_table_to' => 'To',
     'newpoints_custom_rates_monetize_page_logs_table_from' => 'From',
     'newpoints_custom_rates_monetize_page_logs_table_date' => 'Date',
+
+    'newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_charge' => 'Rates Charge',
+    'newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_author_share' => 'Rates Author Share',
+    'newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_delete_charge' => 'Rates Charge Delete',
+    'newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_delete_author_share' => 'Rates Author Share Delete',
+
+    'newpoints_custom_rates_monetize_page_logs_primary' => '<i>{1}</i> rate',
+    'newpoints_custom_rates_monetize_page_logs_secondary' => 'Post: <i><a href="{1}/{2}#pid{3}">{4}</a></i>',
 ];

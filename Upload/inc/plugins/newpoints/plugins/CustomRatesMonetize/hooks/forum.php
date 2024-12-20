@@ -37,6 +37,8 @@ use function Newpoints\Core\post_parser_parse_message;
 use function Newpoints\Core\rules_forum_get_rate;
 use function Newpoints\Core\rules_get_group_rate;
 use function Newpoints\CustomRatesMonetize\Core\templates_get;
+use function ougc\CustomRates\Core\rateGet;
+use function ougc\CustomRates\Core\rateGetName;
 
 function newpoints_global_start(array &$hook_arguments): array
 {
@@ -201,6 +203,91 @@ function newpoints_home_end(): bool
     }
 
     $latest_transactions[] = eval(templates_get('page_table_transactions'));
+
+    return true;
+}
+
+function newpoints_logs_log_row(): bool
+{
+    global $log_data;
+
+    if (!in_array($log_data['action'], [
+        'custom_rates_monetize_charge',
+        'custom_rates_monetize_author_share',
+        'custom_rates_monetize_delete_author_share',
+        'custom_rates_monetize_delete_charge'
+    ])) {
+        return false;
+    }
+
+    global $lang;
+    global $log_action, $log_primary, $log_secondary;
+
+    language_load('custom_rates_monetize');
+
+    $rate_id = (int)$log_data['log_primary_id'];
+
+    $rate_data = rateGet($rate_id);
+
+    if (!empty($rate_data)) {
+        if (!$rate_name = rateGetName($rate_id)) {
+            $rate_name = htmlspecialchars_uni($rate_data['name']);
+        }
+
+        $log_primary = $lang->sprintf($lang->newpoints_custom_rates_monetize_page_logs_primary, $rate_name);
+    }
+
+    $post_id = (int)$log_data['log_secondary_id'];
+
+    $post_data = get_post($post_id);
+
+    if (!empty($post_data)) {
+        global $mybb;
+
+        $post_url = get_post_link($post_id, (int)$post_data['tid']);
+
+        $post_subject = post_parser_parse_message($post_data['subject']);
+
+        $log_secondary = $lang->sprintf(
+            $lang->newpoints_custom_rates_monetize_page_logs_secondary,
+            $mybb->settings['bburl'],
+            $post_url,
+            $post_id,
+            $post_subject
+        );
+    }
+
+    if ($log_data['action'] === 'custom_rates_monetize_charge') {
+        $log_action = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_charge;
+    } elseif ($log_data['action'] === 'custom_rates_monetize_author_share') {
+        $log_action = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_author_share;
+    } elseif ($log_data['action'] === 'custom_rates_monetize_delete_charge') {
+        $log_action = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_author_share;
+    } elseif ($log_data['action'] === 'custom_rates_monetize_delete_author_share') {
+        $log_action = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_delete_author_share;
+    }
+
+    return true;
+}
+
+function newpoints_logs_end(): bool
+{
+    global $lang;
+    global $action_types;
+
+    language_load('custom_rates_monetize');
+
+    foreach ($action_types as $key => &$action_type) {
+        if ($key === 'custom_rates_monetize_charge') {
+            $action_type = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_charge;
+        } elseif ($key === 'custom_rates_monetize_author_share') {
+            $action_type = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_author_share;
+        } elseif ($key === 'custom_rates_monetize_delete_charge') {
+            $action_type = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_author_share;
+        } elseif ($key === 'custom_rates_monetize_delete_author_share') {
+            $action_type = $lang->newpoints_custom_rates_monetize_page_logs_custom_rates_monetize_delete_author_share;
+        }
+    }
 
     return true;
 }
