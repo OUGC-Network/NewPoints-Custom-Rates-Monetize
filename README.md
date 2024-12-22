@@ -62,26 +62,20 @@ A setup that meets the following requirements is necessary to use this plugin.
    │ │ │ │ │ ├── admin
    │ │ │ │ │ │ ├── newpoints_custom_rates_monetize.lang.php
    │ │ │ │ │ ├── newpoints_custom_rates_monetize.lang.php
-   │ │ │ │ ├── espanol
-   │ │ │ │ │ ├── admin
-   │ │ │ │ │ │ ├── newpoints_custom_rates_monetize.lang.php
-   │ │ │ │ │ ├── newpoints_custom_rates_monetize.lang.php
    │ │ │ ├── plugins
-   │ │ │ │ ├── ougc
-   │ │ │ │ │ ├── CustomRatesMonetize
-   │ │ │ │ │ │ ├── hooks
-   │ │ │ │ │ │ │ ├── admin.php
-   │ │ │ │ │ │ │ ├── forum.php
-   │ │ │ │ │ │ │ ├── shared.php
-   │ │ │ │ │ │ ├── settings
-   │ │ │ │ │ │ │ ├── custom_rates_monetize.json
-   │ │ │ │ │ │ ├── templates
-   │ │ │ │ │ │ │ ├── showthread_button.html
+   │ │ │ │ ├── CustomRatesMonetize
+   │ │ │ │ │ ├── hooks
    │ │ │ │ │ │ ├── admin.php
+   │ │ │ │ │ │ ├── forum.php
+   │ │ │ │ │ │ ├── shared.php
+   │ │ │ │ │ ├── settings
+   │ │ │ │ │ │ ├── custom_rates_monetize.json
+   │ │ │ │ │ ├── templates
+   │ │ │ │ │ │ ├── page_table_transactions.html
+   │ │ │ │ │ │ ├── page_table_transactions_row.html
+   │ │ │ │ │ ├── admin.php
+   │ │ │ │ │ ├── core.php
    │ │ │ │ ├── newpoints_custom_rates_monetize.php
-   │ │ │ ├── newpoints_custom_rates_monetize.php
-   │ ├── tasks
-   │ │ ├── newpoints_custom_rates_monetize.php
    ```
 
 ### Installing <a name = "install"></a>

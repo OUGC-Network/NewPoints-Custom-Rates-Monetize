@@ -35,11 +35,14 @@ use function Newpoints\Core\language_load;
 use function Newpoints\Core\log_add;
 use function Newpoints\Core\points_add_simple;
 use function Newpoints\Core\points_format;
-use function Newpoints\Core\points_substract;
+use function Newpoints\Core\points_subtract;
 use function Newpoints\Core\user_can_get_points;
 use function Newpoints\Core\users_get_group_permissions;
 use function ougc\CustomRates\Core\logGet;
 use function ougc\CustomRates\Core\rateGet;
+
+use const Newpoints\Core\LOGGING_TYPE_CHARGE;
+use const Newpoints\Core\LOGGING_TYPE_INCOME;
 
 function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
 {
@@ -94,7 +97,7 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
             } else {
                 $author_share = (int)$rate_data['newpoints_author_share_percentage'];
 
-                points_substract($log_user_id, $log_points);
+                points_subtract($log_user_id, $log_points);
 
                 $hook_arguments['insertData']['newpoints_charged'] = $log_points;
 
@@ -105,7 +108,9 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
                     $log_user_id,
                     $log_points,
                     $rate_id,
-                    $post_id
+                    $post_id,
+                    0,
+                    LOGGING_TYPE_CHARGE
                 );
 
                 if ($author_share > 0 && $author_share <= 100 && user_can_get_points($post_user_id, $forum_id)) {
@@ -125,7 +130,9 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
                         $post_user_id,
                         $log_points_author_share,
                         $rate_id,
-                        $post_id
+                        $post_id,
+                        0,
+                        LOGGING_TYPE_INCOME
                     );
                 }
             }
@@ -177,28 +184,32 @@ function ougc_custom_reputation_log_delete_end(array &$hook_arguments): array
 
         $log_user_data = get_user($log_user_id);
 
-        points_substract($post_user_id, $log_points_author_share);
+        points_subtract($post_user_id, $log_points_author_share);
 
         points_add_simple($log_user_id, $log_points);
 
         log_add(
             'custom_rates_monetize_delete_author_share',
             '',
-            $post_user_data['username'],
+            $post_user_data['username'] ?? '',
             $post_user_id,
             $log_points_author_share,
             (int)$log_data['rid'],
-            $post_id
+            $post_id,
+            0,
+            LOGGING_TYPE_CHARGE
         );
 
         log_add(
             'custom_rates_monetize_delete_charge',
             '',
-            $log_user_data['username'],
+            $log_user_data['username'] ?? '',
             $log_user_id,
             $log_points,
             (int)$log_data['rid'],
-            $post_id
+            $post_id,
+            0,
+            LOGGING_TYPE_INCOME
         );
     }
 

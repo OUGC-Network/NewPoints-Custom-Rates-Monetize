@@ -101,7 +101,7 @@ function plugin_information(): array
 
     return [
         'name' => 'Custom Rates Monetize',
-        'description' => $lang->newpoints_custom_rates_monetize,
+        'description' => $lang->newpoints_custom_rates_monetize_desc,
         'website' => 'https://ougc.network',
         'author' => 'Omar G.',
         'authorsite' => 'https://ougc.network',
