@@ -41,6 +41,7 @@ use function Newpoints\Core\plugins_version_get;
 use function Newpoints\Core\plugins_version_update;
 use function Newpoints\Core\settings_remove;
 use function Newpoints\Core\templates_remove;
+use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
 
 const FIELDS_DATA = [
     'ougc_customrep' => [
@@ -114,9 +115,19 @@ function plugin_information(): array
 
 function plugin_activation(): bool
 {
-    global $db;
+    if (!customRatesPluginIsInstalled()) {
+        global $lang;
 
-    language_load('custom_rates_monetize');
+        language_load('custom_rates_monetize');
+        
+        flash_message($lang->newpoints_custom_rates_monetize_plugin_missing, 'error');
+
+        admin_redirect('index.php?module=newpoints-plugins');
+
+        return false;
+    }
+
+    global $db;
 
     $current_version = plugins_version_get('custom_rates_monetize');
 

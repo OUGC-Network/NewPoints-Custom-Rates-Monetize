@@ -33,9 +33,10 @@ namespace Newpoints\CustomRatesMonetize\Hooks\Forum;
 use function Newpoints\Core\get_setting;
 use function Newpoints\Core\language_load;
 use function Newpoints\Core\points_format;
-use function Newpoints\Core\post_parser_parse_message;
+use function Newpoints\Core\post_parser;
 use function Newpoints\Core\rules_forum_get_rate;
 use function Newpoints\Core\rules_get_group_rate;
+use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
 use function Newpoints\CustomRatesMonetize\Core\templates_get;
 use function ougc\CustomRates\Core\rateGet;
 use function ougc\CustomRates\Core\rateGetName;
@@ -118,6 +119,10 @@ function ougc_custom_rates_reputation_add_process_start(array &$hook_arguments):
 
 function newpoints_home_end(): bool
 {
+    if (!customRatesPluginIsInstalled()) {
+        return false;
+    }
+
     if (!($limit = (int)get_setting('custom_rates_monetize_home_transactions'))) {
         return false;
     }
@@ -159,7 +164,7 @@ function newpoints_home_end(): bool
     $logs_list = '';
 
     while ($log_data = $db->fetch_array($query)) {
-        $post_subject = post_parser_parse_message($log_data['subject']);
+        $post_subject = post_parser()->parse_badwords($log_data['subject']);
 
         $post_id = (int)$log_data['pid'];
 
@@ -209,6 +214,10 @@ function newpoints_home_end(): bool
 
 function newpoints_logs_log_row(): bool
 {
+    if (!customRatesPluginIsInstalled()) {
+        return false;
+    }
+
     global $log_data;
 
     if (!in_array($log_data['action'], [
@@ -246,7 +255,7 @@ function newpoints_logs_log_row(): bool
 
         $post_url = get_post_link($post_id, (int)$post_data['tid']);
 
-        $post_subject = post_parser_parse_message($post_data['subject']);
+        $post_subject = post_parser()->parse_badwords($post_data['subject']);
 
         $log_secondary = $lang->sprintf(
             $lang->newpoints_custom_rates_monetize_page_logs_secondary,

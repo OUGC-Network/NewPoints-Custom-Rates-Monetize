@@ -30,6 +30,8 @@ $l = [
     'newpoints_custom_rates_monetize' => 'Custom Rates Monetize',
     'newpoints_custom_rates_monetize_desc' => 'Require users to spend points to rate posts using the Custom Rates plugin.',
 
+    'newpoints_custom_rates_monetize_plugin_missing' => 'This plugin requires the <a href="https://community.mybb.com/mods.php?action=view&pid=234">Custom Rates</a> plugin to be installed and activated.',
+
     'setting_group_newpoints_custom_rates_monetize' => 'Custom Rates Monetize',
     'setting_group_newpoints_custom_rates_monetize_desc' => 'Require users to spend points to rate posts using the Custom Rates plugin.',
 

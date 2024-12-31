@@ -30,9 +30,20 @@ declare(strict_types=1);
 
 namespace Newpoints\CustomRatesMonetize\Core;
 
+use function Newpoints\Core\language_load;
+
 use const Newpoints\CustomRatesMonetize\ROOT;
 
 function templates_get(string $template_name = '', bool $enable_html_comments = true): string
 {
     return \Newpoints\Core\templates_get($template_name, $enable_html_comments, ROOT, 'custom_rates_monetize_');
+}
+
+function customRatesPluginIsInstalled(): bool
+{
+    global $cache;
+
+    $plugins_list = $cache->read('ougc_plugins');
+
+    return !empty($plugins_list['customrep']) && function_exists('ougc_customrep_info');
 }
