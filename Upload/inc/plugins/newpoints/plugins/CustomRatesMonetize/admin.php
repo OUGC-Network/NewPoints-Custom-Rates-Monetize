@@ -119,7 +119,7 @@ function plugin_activation(): bool
         global $lang;
 
         language_load('custom_rates_monetize');
-        
+
         flash_message($lang->newpoints_custom_rates_monetize_plugin_missing, 'error');
 
         admin_redirect('index.php?module=newpoints-plugins');
@@ -135,7 +135,7 @@ function plugin_activation(): bool
 
     /*~*~* RUN UPDATES START *~*~*/
 
-    if ($db->field_exists('points', 'ougc_customrep')) {
+    if ($db->table_exists('ougc_customrep') && $db->field_exists('points', 'ougc_customrep')) {
         $db->rename_column(
             'ougc_customrep',
             'points',
@@ -144,7 +144,7 @@ function plugin_activation(): bool
         );
     }
 
-    if ($db->field_exists('points', 'ougc_customrep_log')) {
+    if ($db->table_exists('ougc_customrep_log') && $db->field_exists('points', 'ougc_customrep_log')) {
         $db->rename_column(
             'ougc_customrep_log',
             'points',
@@ -192,7 +192,7 @@ function plugin_uninstallation(): bool
         'newpoints_custom_rates_monetize_'
     );
 
-    templates_remove([''], 'newpoints_custom_rates_monetize_');
+    templates_remove(['page_table_transactions', 'page_table_transactions_row'], 'newpoints_custom_rates_monetize_');
 
     plugins_version_delete('custom_rates_monetize');
 
