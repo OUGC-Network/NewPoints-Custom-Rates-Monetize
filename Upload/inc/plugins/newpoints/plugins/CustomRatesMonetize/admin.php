@@ -43,11 +43,14 @@ use function Newpoints\Core\settings_remove;
 use function Newpoints\Core\templates_remove;
 use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
 
+use const Newpoints\DECIMAL_DATA_TYPE_SIZE;
+
 const FIELDS_DATA = [
     'ougc_customrep' => [
         'newpoints_price' => [
             'type' => 'DECIMAL',
-            'size' => '16,2',
+            'unsigned' => true,
+            'size' => DECIMAL_DATA_TYPE_SIZE,
             'default' => 0
         ],
         'newpoints_author_share_percentage' => [
@@ -59,19 +62,21 @@ const FIELDS_DATA = [
     'ougc_customrep_log' => [
         'newpoints_received' => [
             'type' => 'DECIMAL',
-            'size' => '16,2',
+            'unsigned' => true,
+            'size' => DECIMAL_DATA_TYPE_SIZE,
             'default' => 0
         ],
         'newpoints_charged' => [
             'type' => 'DECIMAL',
-            'size' => '16,2',
+            'unsigned' => true,
+            'size' => DECIMAL_DATA_TYPE_SIZE,
             'default' => 0
         ]
     ],
     'usergroups' => [
         'newpoints_rate_custom_rates_subtraction' => [
-            'type' => 'DECIMAL',
-            'size' => '16,2',
+            'type' => 'INT',
+            'unsigned' => true,
             'default' => 100,
             'formType' => 'numericField',
             'formOptions' => [
@@ -83,7 +88,8 @@ const FIELDS_DATA = [
     'forums' => [
         'newpoints_rate_custom_rates' => [
             'type' => 'DECIMAL',
-            'size' => '16,2',
+            'unsigned' => true,
+            'size' => DECIMAL_DATA_TYPE_SIZE,
             'default' => 1,
             'formType' => 'numericField',
             'formOptions' => [

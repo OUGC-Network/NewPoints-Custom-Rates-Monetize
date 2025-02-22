@@ -45,5 +45,5 @@ function customRatesPluginIsInstalled(): bool
 
     $plugins_list = $cache->read('ougc_plugins');
 
-    return !empty($plugins_list['customrep']) && function_exists('ougc_customrep_info');
+    return !empty($plugins_list['customrep']) && defined('ougc\CustomRates\ROOT');
 }
