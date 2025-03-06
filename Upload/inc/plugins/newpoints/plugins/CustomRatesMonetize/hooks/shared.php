@@ -78,12 +78,9 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
         if ($forum_rate && $group_rate) {
             $log_user_data = get_user($log_user_id);
 
-            $log_points = round(
-                $log_points * $forum_rate * $group_rate,
-                (int)get_setting('main_decimal')
-            );
+            $log_user_points = (float)$log_user_data['newpoints'];
 
-            if ($log_points > $post_user_data['newpoints'] && !empty($errorFunction)) {
+            if ($log_points > $log_user_points && !empty($errorFunction)) {
                 global $lang;
 
                 language_load('custom_rates_monetize');
@@ -131,7 +128,7 @@ function ougc_custom_reputation_log_insert_start(array &$hook_arguments): array
                         $log_points_author_share,
                         $rate_id,
                         $post_id,
-                        0,
+                        $log_user_id,
                         LOGGING_TYPE_INCOME
                     );
                 }
