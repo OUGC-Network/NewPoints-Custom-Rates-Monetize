@@ -43,7 +43,9 @@ use function Newpoints\Core\settings_remove;
 use function Newpoints\Core\templates_remove;
 use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
 
+use const Newpoints\Core\FORM_TYPE_NUMERIC_FIELD;
 use const Newpoints\DECIMAL_DATA_TYPE_SIZE;
+use const Newpoints\DECIMAL_DATA_TYPE_STEP;
 
 const FIELDS_DATA = [
     'ougc_customrep' => [
@@ -51,7 +53,11 @@ const FIELDS_DATA = [
             'type' => 'DECIMAL',
             'unsigned' => true,
             'size' => DECIMAL_DATA_TYPE_SIZE,
-            'default' => 0
+            'default' => 0,
+            'form_type' => FORM_TYPE_NUMERIC_FIELD,
+            'form_options' => [
+                'step' => DECIMAL_DATA_TYPE_STEP,
+            ]
         ],
         'newpoints_author_share_percentage' => [
             'type' => 'INT',
@@ -78,8 +84,8 @@ const FIELDS_DATA = [
             'type' => 'INT',
             'unsigned' => true,
             'default' => 100,
-            'formType' => 'numericField',
-            'formOptions' => [
+            'form_type' => FORM_TYPE_NUMERIC_FIELD,
+            'form_options' => [
                 //'min' => 0,
                 'step' => 0.01,
             ]
@@ -91,10 +97,10 @@ const FIELDS_DATA = [
             'unsigned' => true,
             'size' => DECIMAL_DATA_TYPE_SIZE,
             'default' => 1,
-            'formType' => 'numericField',
-            'formOptions' => [
+            'form_type' => FORM_TYPE_NUMERIC_FIELD,
+            'form_options' => [
                 //'min' => 0,
-                'step' => 0.01,
+                'step' => DECIMAL_DATA_TYPE_STEP,
             ]
         ],
     ],
