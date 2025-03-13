@@ -41,7 +41,7 @@ use function Newpoints\Core\plugins_version_get;
 use function Newpoints\Core\plugins_version_update;
 use function Newpoints\Core\settings_remove;
 use function Newpoints\Core\templates_remove;
-use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
+use function Newpoints\CustomRatesMonetize\Core\custom_rates_plugin_is_installed;
 
 use const Newpoints\Core\FORM_TYPE_NUMERIC_FIELD;
 use const Newpoints\DECIMAL_DATA_TYPE_SIZE;
@@ -127,7 +127,7 @@ function plugin_information(): array
 
 function plugin_activation(): bool
 {
-    if (!customRatesPluginIsInstalled()) {
+    if (!custom_rates_plugin_is_installed()) {
         global $lang;
 
         language_load('custom_rates_monetize');

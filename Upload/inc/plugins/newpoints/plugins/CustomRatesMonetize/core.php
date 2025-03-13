@@ -39,7 +39,7 @@ function templates_get(string $template_name = '', bool $enable_html_comments = 
     return \Newpoints\Core\templates_get($template_name, $enable_html_comments, ROOT, 'custom_rates_monetize_');
 }
 
-function customRatesPluginIsInstalled(): bool
+function custom_rates_plugin_is_installed(): bool
 {
     global $cache;
 

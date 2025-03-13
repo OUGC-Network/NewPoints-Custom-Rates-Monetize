@@ -36,7 +36,7 @@ use function Newpoints\Core\points_format;
 use function Newpoints\Core\post_parser;
 use function Newpoints\Core\rules_forum_get_rate;
 use function Newpoints\Core\rules_get_group_rate;
-use function Newpoints\CustomRatesMonetize\Core\customRatesPluginIsInstalled;
+use function Newpoints\CustomRatesMonetize\Core\custom_rates_plugin_is_installed;
 use function Newpoints\CustomRatesMonetize\Core\templates_get;
 use function ougc\CustomRates\Core\rateGet;
 use function ougc\CustomRates\Core\rateGetName;
@@ -119,7 +119,7 @@ function ougc_custom_rates_reputation_add_process_start(array &$hook_arguments):
 
 function newpoints_home_end(): bool
 {
-    if (!customRatesPluginIsInstalled()) {
+    if (!custom_rates_plugin_is_installed()) {
         return false;
     }
 
@@ -214,7 +214,7 @@ function newpoints_home_end(): bool
 
 function newpoints_logs_log_row(): bool
 {
-    if (!customRatesPluginIsInstalled()) {
+    if (!custom_rates_plugin_is_installed()) {
         return false;
     }
 
