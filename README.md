@@ -1,10 +1,16 @@
+<p align="center">
+    <a href="" rel="noopener">
+        <img width="700" height="400" src="https://github.com/user-attachments/assets/03527bfd-0794-4dab-83a6-cbd283352023" alt="Project logo">
+    </a>
+</p>
+
 <h3 align="center">Newpoints Custom Rates Monetize</h3>
 
 <div align="center">
 
 [![Status](https://img.shields.io/badge/status-active-success.svg)]()
-[![GitHub Issues](https://img.shields.io/github/issues/OUGC-Network/NewPoints-Custom-Rates-Monetizer.svg)](./issues)
-[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/OUGC-Network/NewPoints-Custom-Rates-Monetizer.svg)](./pulls)
+[![GitHub Issues](https://img.shields.io/github/issues/OUGC-Network/NewPoints-Custom-Rates-Monetize≈.svg)](./issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/OUGC-Network/NewPoints-Custom-Rates-Monetize.svg)](./pulls)
 [![License](https://img.shields.io/badge/license-GPL-blue)](/LICENSE)
 
 </div>
@@ -142,7 +148,7 @@ The following is a description of additional configuration for this plugin.
 
 - [@Omar G](https://github.com/Sama34) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/OUGC-Network/NewPoints-Custom-Rates-Monetizer/contributors) who
+See also the list of [contributors](https://github.com/OUGC-Network/NewPoints-Custom-Rates-Monetize/contributors) who
 participated in
 this
 project.
